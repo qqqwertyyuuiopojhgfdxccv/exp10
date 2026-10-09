@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-```groovy
+
 pipeline {
     agent any
 
@@ -115,5 +114,4 @@ pipeline {
         }
     }
 }
-```
->>>>>>> c2555102bb9f2c5b14a33640a9d1d27f208bea50
+
