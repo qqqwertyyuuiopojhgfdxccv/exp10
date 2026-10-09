@@ -10,7 +10,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/qqqwertyyuuiopojhgfdxccv/appu.git'
+                git 'https://github.com/qqqwertyyuuiopojhgfdxccv/exp10.git'
             }
         }
 
