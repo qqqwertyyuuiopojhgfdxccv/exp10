@@ -1,24 +1,20 @@
-
 pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "immanuelpaul29/paul"
+        DOCKER_IMAGE = "immanuelpaul29/exp10:v1"
     }
 
     stages {
-
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/qqqwertyyuuiopojhgfdxccv/exp10.git'
+                checkout scm
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}:latest")
-                }
+                bat 'docker build -t %DOCKER_IMAGE% .'
             }
         }
 
@@ -36,22 +32,17 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('', 'dockerhub-creds') {
-                        docker.image("${DOCKER_IMAGE}:latest").push()
-                    }
-                }
+                bat 'docker push %DOCKER_IMAGE%'
             }
         }
     }
 
     post {
         success {
-            echo 'Image successfully built and pushed to Docker Hub'
+            echo 'Docker image pushed successfully!'
         }
-
         failure {
-            echo 'Pipeline failed'
+            echo 'Pipeline failed. Check Console Output.'
         }
     }
 }
