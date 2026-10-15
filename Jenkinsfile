@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-```groovy
-=======
 
->>>>>>> 1d6a76b5e12e04649ff135e3d78147742e77225c
 pipeline {
     agent any
 
@@ -60,68 +55,3 @@ pipeline {
         }
     }
 }
-<<<<<<< HEAD
-```
-=======
-```groovy
-pipeline {
-    agent any
-
-    environment {
-        DOCKER_IMAGE = "immanuelpaul29/paul"
-    }
-
-    stages {
-
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/qqqwertyyuuiopojhgfdxccv/exp10.git'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}:latest")
-                }
-            }
-        }
-
-        stage('Login to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('', 'dockerhub-creds') {
-                        docker.image("${DOCKER_IMAGE}:latest").push()
-                    }
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Image successfully built and pushed to Docker Hub'
-        }
-
-        failure {
-            echo 'Pipeline failed'
-        }
-    }
-}
-```
->>>>>>> c2555102bb9f2c5b14a33640a9d1d27f208bea50
-=======
-
->>>>>>> 1d6a76b5e12e04649ff135e3d78147742e77225c
